@@ -23,7 +23,8 @@ GROUP BY sales.customer_id;
 
 WITH data AS 
 (
-    SELECT sales.customer_id, menu.product_name, sales.order_date, menu.product_id, ROW_NUMBER() OVER (PARTITION BY sales.customer_id ORDER BY sales.customer_id) AS row_num
+    SELECT sales.customer_id, menu.product_name, sales.order_date, menu.product_id, 
+    ROW_NUMBER() OVER (PARTITION BY sales.customer_id ORDER BY sales.customer_id) AS row_num
     FROM sales
     INNER JOIN menu ON sales.product_id = menu.product_id
     WHERE sales.order_date = (SELECT MIN(sales.order_date) FROM sales)
@@ -50,7 +51,8 @@ LIMIT 1;
 
 WITH data AS 
 (
-    SELECT sales.customer_id, menu.product_name, COUNT(menu.product_name) AS count_product, ROW_NUMBER() OVER (PARTITION BY sales.customer_id ORDER BY sales.customer_id) AS row_num
+    SELECT sales.customer_id, menu.product_name, COUNT(menu.product_name) AS count_product, 
+    ROW_NUMBER() OVER (PARTITION BY sales.customer_id ORDER BY sales.customer_id) AS row_num
     FROM sales
     INNER JOIN menu ON sales.product_id = menu.product_id
     GROUP BY sales.customer_id, menu.product_name
@@ -68,7 +70,8 @@ LIMIT 3;
 
 WITH data AS 
 (
-    SELECT sales.customer_id, sales.order_date, members.join_date, menu.product_name, ROW_NUMBER() OVER (PARTITION BY sales.customer_id ORDER BY sales.customer_id) AS row_num 
+    SELECT sales.customer_id, sales.order_date, members.join_date, menu.product_name, 
+    ROW_NUMBER() OVER (PARTITION BY sales.customer_id ORDER BY sales.customer_id) AS row_num 
     FROM sales
     INNER JOIN menu ON sales.product_id = menu.product_id
     INNER JOIN members ON sales.customer_id = members.customer_id
@@ -86,7 +89,8 @@ FROM data;
 
 WITH data AS 
 (
-    SELECT sales.customer_id, sales.order_date, members.join_date, menu.product_name, ROW_NUMBER() OVER (PARTITION BY sales.customer_id ORDER BY sales.customer_id) AS row_num 
+    SELECT sales.customer_id, sales.order_date, members.join_date, menu.product_name, 
+    ROW_NUMBER() OVER (PARTITION BY sales.customer_id ORDER BY sales.customer_id) AS row_num 
     FROM sales
     INNER JOIN menu ON sales.product_id = menu.product_id
     INNER JOIN members ON sales.customer_id = members.customer_id
@@ -104,7 +108,9 @@ FROM data;
 
 WITH data AS 
 (
-    SELECT sales.customer_id, sales.order_date, members.join_date, COUNT(menu.product_name) AS count_product, SUM(menu.price) AS total_price, ROW_NUMBER() OVER (PARTITION BY count_product ORDER BY sales.customer_id) AS row_num 
+    SELECT sales.customer_id, sales.order_date, members.join_date, COUNT(menu.product_name) AS count_product, 
+    SUM(menu.price) AS total_price, 
+    ROW_NUMBER() OVER (PARTITION BY count_product ORDER BY sales.customer_id) AS row_num 
     FROM sales
     INNER JOIN menu ON sales.product_id = menu.product_id
     INNER JOIN members ON sales.customer_id = members.customer_id
@@ -121,7 +127,9 @@ GROUP BY data.customer_id;
 
 // 9. If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
 
--- Get the count of products. For non-sushi items, multiply those counts by 1. For sushi-items, multiple those counts by 2. Add up the resulting values and group the results by customers.
+-- Get the count of products. For non-sushi items, multiply those counts by 1. 
+-- For sushi-items, multiple those counts by 2. 
+-- Add up the resulting values and group the results by customers.
 
 WITH data AS 
 (
