@@ -1,8 +1,8 @@
-// 1. What is the total amount each customer spent at the restaurant?
+// -- 1. What is the total amount each customer spent at the restaurant?
 
-// Need to join the sales and menu tables together
-// Take the sum of the price field and order the results by customer_id
-// The final table result should be 3 rows and 2 columns, where the rows are customer_id and the columns are customer_id and sum_price
+// -- Need to join the sales and menu tables together
+// -- Take the sum of the price field and order the results by customer_id
+// -- The final table result should be 3 rows and 2 columns, where the rows are customer_id and the columns are customer_id and sum_price
 
 SELECT sales.customer_id, SUM(menu.price) AS total_amount_spent
 FROM sales
@@ -11,7 +11,7 @@ GROUP BY sales.customer_id;
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
-// 2. How many days has each customer visited the restaurant?
+// -- 2. How many days has each customer visited the restaurant?
 
 SELECT sales.customer_id, COUNT(DISTINCT(sales.order_date)) AS visits
 FROM sales
@@ -19,7 +19,7 @@ GROUP BY sales.customer_id;
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
-// 3. What was the first item from the menu purchased by each customer?
+// -- 3. What was the first item from the menu purchased by each customer?
 
 WITH data AS 
 (
@@ -36,7 +36,7 @@ WHERE row_num = 1;
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
-// 4. What is the most purchased item on the menu and how many times was it purchased by all customers?
+// -- 4. What is the most purchased item on the menu and how many times was it purchased by all customers?
 
 SELECT menu.product_name, COUNT(menu.product_name) AS product_count
 FROM sales
@@ -47,7 +47,7 @@ LIMIT 1;
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
-// 5. Which item was the most popular for each customer?
+// -- 5. Which item was the most popular for each customer?
 
 WITH data AS 
 (
@@ -66,7 +66,7 @@ LIMIT 3;
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
-// 6. Which item was purchased first by the customer after they became a member?
+// -- 6. Which item was purchased first by the customer after they became a member?
 
 WITH data AS 
 (
@@ -85,7 +85,7 @@ FROM data;
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
-// 7. Which item was purchased just before the customer became a member?
+// -- 7. Which item was purchased just before the customer became a member?
 
 WITH data AS 
 (
@@ -104,7 +104,7 @@ FROM data;
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
-// 8. What is the total items and amount spent for each member before they became a member?
+// -- 8. What is the total items and amount spent for each member before they became a member?
 
 WITH data AS 
 (
@@ -125,7 +125,7 @@ GROUP BY data.customer_id;
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
-// 9. If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
+// -- 9. If each $1 spent equates to 10 points and sushi has a 2x points multiplier - how many points would each customer have?
 
 -- Get the count of products. For non-sushi items, multiply those counts by 1. 
 -- For sushi-items, multiple those counts by 2. 
@@ -156,7 +156,7 @@ GROUP BY points_data.customer_id;
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
-// 10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
+// -- 10. In the first week after a customer joins the program (including their join date) they earn 2x points on all items, not just sushi - how many points do customer A and B have at the end of January?
 
 WITH data AS
 (
@@ -186,7 +186,7 @@ GROUP BY points_data.customer_id;
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
-// Bonus Question: Join All The Things
+// -- Bonus Question: Join All The Things
 
 WITH data AS 
 (
@@ -207,7 +207,7 @@ FROM data;
 
 ------------------------------------------------------------------------------------------------------------------------------------------
 
-// Bonus question: Rank All The Things
+// -- Bonus question: Rank All The Things
 
 WITH data AS 
 (
